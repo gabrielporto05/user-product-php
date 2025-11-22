@@ -30,7 +30,8 @@ class UserController
             header("Location: ../views/login.php");
             exit;
         } catch (PDOException $e) {
-            die("Erro ao cadastrar: " . $e->getMessage());
+            header("Location: ../views/error.php?titulo=Erro+no+Cadastro&subtitulo=Não+foi+possível+realizar+o+cadastro");
+            exit;
         }
     }
 
@@ -40,7 +41,7 @@ class UserController
         $password = $dados['password'];
 
         if (!$this->isValidEmail($email)) {
-            die("E-mail inválido. <a href='../views/login.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=E-mail+no+formato+inválido");
         }
 
         $hashedPassword = hash('sha512', $password);
@@ -49,36 +50,44 @@ class UserController
         $stmt->execute([$email, $hashedPassword]);
         $user = $stmt->fetch();
 
-        if ($user) {
-            $_SESSION['user'] = $user['user'];
-            $_SESSION['name'] = $user['name'];
-            header("Location: ../views/home.php");
+        if (!$user) {
+            header("Location: ../views/error.php?titulo=Usuário+ou+senha+inválidos&subtitulo=Usuário+ou+senha+inválidos");
             exit;
-        } else {
-            die("Usuário ou senha inválidos. <a href='../views/login.php'>Tentar novamente</a>");
         }
+
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['name'] = $user['name'];
+        header("Location: ../views/home.php");
+
+        exit;
     }
 
     private function validateDados($name, $email, $password, $confirmPassword)
     {
         if (empty($name) || empty($email) || empty($password)) {
-            die("Todos os campos são obrigatórios. <a href='../views/register.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Dados+incompletos&subtitulo=Todos+os+campos+são+obrigatórios");
+            exit;
         }
 
         if (!$this->isValidEmail($email)) {
-            die("Formato de e-mail inválido. <a href='../views/register.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=E-mail+no+formato+inválido");
+            exit;
         }
 
         if ($this->isEmailExists($email)) {
-            die("E-mail já cadastrado. <a href='../views/register.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Cadastro+Inválido&subtitulo=E-mail+já+cadastrado");
+            exit;
         }
 
         if ($password !== $confirmPassword) {
-            die("As senhas não conferem. <a href='../views/register.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Senha+Inválida&subtitulo=As+senhas+não+conferem");
+            exit;
         }
 
         if (strlen($password) < 6) {
-            die("A senha deve ter no mínimo 6 caracteres. <a href='../views/register.php'>Voltar</a>");
+            header("Location: ../views/error.php?titulo=Senha+Fraca&subtitulo=A+senha+deve+ter+no+mínimo+6+caracteres");
+            exit;
         }
     }
 
