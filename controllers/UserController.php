@@ -22,11 +22,11 @@ class UserController
         $confirmPassword = $dados['confirm_password'];
 
         if ($password !== $confirmPassword) {
-            die("❌ As senhas não conferem. <a href='../views/register.php'>Voltar</a>");
+            die("As senhas não conferem. <a href='../views/register.php'>Voltar</a>");
         }
 
         if (strlen($password) < 6) {
-            die("❌ A senha deve ter no mínimo 6 caracteres. <a href='../views/register.php'>Voltar</a>");
+            die("A senha deve ter no mínimo 6 caracteres. <a href='../views/register.php'>Voltar</a>");
         }
 
         $hashedPassword = hash('sha512', $password);
@@ -38,7 +38,7 @@ class UserController
             header("Location: ../views/login.php");
             exit;
         } catch (PDOException $e) {
-            die("❌ Erro ao cadastrar: " . $e->getMessage());
+            die("Erro ao cadastrar: " . $e->getMessage());
         }
     }
 
@@ -59,9 +59,25 @@ class UserController
             header("Location: ../views/home.php");
             exit;
         } else {
-            die("❌ Usuário ou senha inválidos. <a href='../views/login.php'>Tentar novamente</a>");
+            die("Usuário ou senha inválidos. <a href='../views/login.php'>Tentar novamente</a>");
         }
     }
+
+    private function isEmailExists($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    private function isUserExists($user)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE user = ?");
+        $stmt->execute([$user]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    private function validateDados($dados) {}
 }
 
 $controller = new UserController($pdo);
