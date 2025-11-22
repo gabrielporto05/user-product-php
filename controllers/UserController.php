@@ -14,26 +14,18 @@ class UserController
 
     public function register($dados)
     {
-
         $name = trim($dados['name']);
-        $user = trim($dados['user']);
         $email = trim($dados['email']);
         $password = $dados['password'];
         $confirmPassword = $dados['confirm_password'];
 
-        if ($password !== $confirmPassword) {
-            die("As senhas não conferem. <a href='../views/register.php'>Voltar</a>");
-        }
-
-        if (strlen($password) < 6) {
-            die("A senha deve ter no mínimo 6 caracteres. <a href='../views/register.php'>Voltar</a>");
-        }
+        $this->validateDados($name, $email, $password, $confirmPassword);
 
         $hashedPassword = hash('sha512', $password);
 
         try {
-            $stmt = $this->pdo->prepare("INSERT INTO users (name, user, email, password) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $user, $email, $hashedPassword]);
+            $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+            $stmt->execute([$name, $email, $hashedPassword]);
 
             header("Location: ../views/login.php");
             exit;
@@ -46,6 +38,10 @@ class UserController
     {
         $email = trim($dados['email']);
         $password = $dados['password'];
+
+        if (!$this->isValidEmail($email)) {
+            die("E-mail inválido. <a href='../views/login.php'>Voltar</a>");
+        }
 
         $hashedPassword = hash('sha512', $password);
 
@@ -63,21 +59,41 @@ class UserController
         }
     }
 
+    private function validateDados($name, $email, $password, $confirmPassword)
+    {
+        if (empty($name) || empty($email) || empty($password)) {
+            die("Todos os campos são obrigatórios. <a href='../views/register.php'>Voltar</a>");
+        }
+
+        if (!$this->isValidEmail($email)) {
+            die("Formato de e-mail inválido. <a href='../views/register.php'>Voltar</a>");
+        }
+
+        if ($this->isEmailExists($email)) {
+            die("E-mail já cadastrado. <a href='../views/register.php'>Voltar</a>");
+        }
+
+        if ($password !== $confirmPassword) {
+            die("As senhas não conferem. <a href='../views/register.php'>Voltar</a>");
+        }
+
+        if (strlen($password) < 6) {
+            die("A senha deve ter no mínimo 6 caracteres. <a href='../views/register.php'>Voltar</a>");
+        }
+    }
+
+    private function isValidEmail($email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
     private function isEmailExists($email)
     {
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
         $stmt->execute([$email]);
+
         return $stmt->fetchColumn() > 0;
     }
-
-    private function isUserExists($user)
-    {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE user = ?");
-        $stmt->execute([$user]);
-        return $stmt->fetchColumn() > 0;
-    }
-
-    private function validateDados($dados) {}
 }
 
 $controller = new UserController($pdo);

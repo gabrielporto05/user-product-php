@@ -29,12 +29,6 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Usuário</label>
-                    <input type="text" name="user" required
-                        class="mt-1 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400" />
-                </div>
-
-                <div>
                     <label class="block text-sm font-medium text-gray-700">E-mail</label>
                     <input type="email" name="email" required
                         class="mt-1 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400" />
