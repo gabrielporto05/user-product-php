@@ -25,7 +25,6 @@ if (!isset($_SESSION['email'])) {
             <p class="text-sm text-gray-500">Preencha os dados abaixo para adicionar um novo produto</p>
         </header>
 
-        <!-- Agora o formulário envia para o ProductController -->
         <form action="../controllers/ProductController.php" method="post" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">Nome</label>
