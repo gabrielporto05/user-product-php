@@ -16,7 +16,7 @@
                 <p class="text-sm text-gray-500">Coloque saus credenciais para acessar sua conta</p>
             </header>
 
-            <form action="/controllers/UserController.php" method="post" class="space-y-4">
+            <form action="/controllers/AuthController.php" method="post" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">E-mail</label>
                     <input type="email" name="email" required

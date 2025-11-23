@@ -73,6 +73,6 @@ if (isset($_POST['create'])) {
     $controller->create($_POST);
 }
 
-if (isset($_POST['delete_id'])) {
-    $controller->delete($_POST['delete_id']);
+if (isset($_POST['delete'])) {
+    $controller->delete($_POST['delete']);
 }

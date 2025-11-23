@@ -27,19 +27,26 @@ $produtos = $controller->list();
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center">
+    <span class="text-gray-600 font-extrabold text-3xl mb-4">
+        Bem-vindo, <?= htmlspecialchars($_SESSION['name']) ?>
+    </span>
     <main class="w-full max-w-5xl bg-white p-10 rounded-xl shadow-lg">
         <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-extrabold text-purple-700">Produtos Cadastrados</h1>
-            <div class="flex gap-4">
-                <a href="create-product.php"
-                    class="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-purple-700 transition">
-                    Cadastrar Produto
-                </a>
-                <a href="logout.php"
-                    class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition">
-                    Sair
-                </a>
+            <h1 class="text-3xl font-extrabold text-purple-700">
+                Produtos Cadastrados
+            </h1>
+            <div class="flex items-center gap-6">
+                <div class="flex gap-4">
+                    <a href="create-product.php"
+                        class="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-purple-700 transition">
+                        Cadastrar Produto
+                    </a>
+                    <a href="../controllers/AuthController.php?logout=1"
+                        class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition">
+                        Sair
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -57,43 +64,43 @@ $produtos = $controller->list();
                 </thead>
                 <tbody>
                     <?php if (count($produtos) > 0): ?>
-                    <?php foreach ($produtos as $produto): ?>
-                    <tr class="border-t hover:bg-gray-50">
-                        <td class="px-4 py-2 text-sm text-gray-600"><?= $produto['id'] ?></td>
+                        <?php foreach ($produtos as $produto): ?>
+                            <tr class="border-t hover:bg-gray-50">
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= $produto['id'] ?></td>
 
-                        <td class="px-4 py-2 text-sm text-gray-600 max-w-[150px] truncate"
-                            title="<?= htmlspecialchars($produto['nome']) ?>">
-                            <?= htmlspecialchars($produto['nome']) ?>
-                        </td>
+                                <td class="px-4 py-2 text-sm text-gray-600 max-w-[150px] truncate"
+                                    title="<?= htmlspecialchars($produto['nome']) ?>">
+                                    <?= htmlspecialchars($produto['nome']) ?>
+                                </td>
 
-                        <td class="px-4 py-2 text-sm text-gray-600 max-w-[100px] truncate"
-                            title="R$ <?= number_format($produto['preco'], 2, ',', '.') ?>">
-                            R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
-                        </td>
+                                <td class="px-4 py-2 text-sm text-gray-600 max-w-[100px] truncate"
+                                    title="R$ <?= number_format($produto['preco'], 2, ',', '.') ?>">
+                                    R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
+                                </td>
 
-                        <td class="px-4 py-2 text-sm text-gray-600"><?= $produto['quantidade'] ?></td>
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= $produto['quantidade'] ?></td>
 
-                        <td class="px-4 py-2 text-sm text-gray-600 max-w-[200px] truncate"
-                            title="<?= htmlspecialchars($produto['descricao']) ?>">
-                            <?= htmlspecialchars($produto['descricao']) ?>
-                        </td>
+                                <td class="px-4 py-2 text-sm text-gray-600 max-w-[200px] truncate"
+                                    title="<?= htmlspecialchars($produto['descricao']) ?>">
+                                    <?= htmlspecialchars($produto['descricao']) ?>
+                                </td>
 
-                        <td class="px-4 py-2 text-center">
-                            <form action="../controllers/ProductController.php" method="post"
-                                onsubmit="return confirm('Deseja excluir este produto?');">
-                                <input type="hidden" name="delete_id" value="<?= $produto['id'] ?>">
-                                <button type="submit"
-                                    class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
-                                    Excluir
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                                <td class="px-4 py-2 text-center">
+                                    <form action="../controllers/ProductController.php" method="post"
+                                        onsubmit="return confirm('Deseja excluir este produto?');">
+                                        <input type="hidden" name="delete" value="<?= $produto['id'] ?>">
+                                        <button type="submit"
+                                            class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     <?php else: ?>
-                    <tr>
-                        <td colspan="6" class="px-4 py-6 text-center text-gray-500">Nenhum produto cadastrado.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="6" class="px-4 py-6 text-center text-gray-500">Nenhum produto cadastrado.</td>
+                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>

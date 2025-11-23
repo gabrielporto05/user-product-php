@@ -35,34 +35,6 @@ class UserController
         }
     }
 
-    public function login($dados)
-    {
-        $email = trim($dados['email']);
-        $password = $dados['password'];
-
-        if (!$this->isValidEmail($email)) {
-            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=E-mail+no+formato+inválido");
-        }
-
-        $hashedPassword = hash('sha512', $password);
-
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $hashedPassword]);
-        $user = $stmt->fetch();
-
-        if (!$user) {
-            header("Location: ../views/error.php?titulo=Usuário+ou+senha+inválidos&subtitulo=Usuário+ou+senha+inválidos");
-            exit;
-        }
-
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['name'] = $user['name'];
-        header("Location: ../views/home.php");
-
-        exit;
-    }
-
     private function validateDados($name, $email, $password, $confirmPassword)
     {
         if (empty($name) || empty($email) || empty($password)) {
@@ -71,7 +43,7 @@ class UserController
         }
 
         if (!$this->isValidEmail($email)) {
-            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=E-mail+no+formato+inválido");
+            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=Formato+de+e-mail+inválido");
             exit;
         }
 
@@ -109,8 +81,4 @@ $controller = new UserController($pdo);
 
 if (isset($_POST['register'])) {
     $controller->register($_POST);
-}
-
-if (isset($_POST['login'])) {
-    $controller->login($_POST);
 }

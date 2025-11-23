@@ -1,18 +1,10 @@
 <?php
 
 session_start();
-require_once __DIR__ . '/../db/config.php';
-require_once __DIR__ . '/../controllers/ProductController.php';
 
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
-}
-
-$controller = new ProductController($pdo);
-
-if (isset($_POST['create'])) {
-    $controller->create($_POST);
 }
 ?>
 
@@ -33,7 +25,8 @@ if (isset($_POST['create'])) {
             <p class="text-sm text-gray-500">Preencha os dados abaixo para adicionar um novo produto</p>
         </header>
 
-        <form action="" method="post" class="space-y-4">
+        <!-- Agora o formulário envia para o ProductController -->
+        <form action="../controllers/ProductController.php" method="post" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">Nome</label>
                 <input type="text" name="nome" required
