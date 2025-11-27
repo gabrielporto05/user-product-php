@@ -138,7 +138,7 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
                     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex flex-col justify-between">
                         <div class="flex items-center justify-between">
                             <h3 class="text-lg font-bold text-blue-700 truncate"><?= htmlspecialchars($produto['nome']) ?></h3>
-                            <span class="px-2 py-1 w-[90px] text-xs rounded-full 
+                            <span class="px-2 py-1 w-[90px] text-xs rounded-full text-center 
                  <?= $produto['quantidade'] > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
                                 <?= $produto['quantidade'] > 0 ? 'Em estoque' : 'Esgotado' ?>
                             </span>
