@@ -20,53 +20,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-200 to-blue-300 min-h-screen flex items-center justify-center">
+<body class="bg-gradient-to-r from-blue-300 to-blue-400 min-h-screen flex items-center justify-center">
     <div class="flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-xl rounded-xl overflow-hidden">
 
         <div class="flex-1 p-10 flex flex-col justify-center">
-            <h1 class="text-4xl font-extrabold text-purple-700 mb-4 text-center">Crie sua conta</h1>
+            <h1 class="text-4xl font-extrabold text-blue-700 mb-4 text-center">Crie sua conta</h1>
             <p class="text-gray-500 text-center mb-8">Preencha os dados abaixo para começar</p>
 
             <?php if ($erro): ?>
-            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
-                <?= htmlspecialchars($erro) ?>
-            </div>
+                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
+                    <?= htmlspecialchars($erro) ?>
+                </div>
             <?php endif; ?>
 
             <form action="" method="post" class="space-y-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nome completo</label>
                     <input type="text" name="name" required
-                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">E-mail</label>
                     <input type="email" name="email" required
-                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Senha</label>
                     <input type="password" name="password" required
-                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Confirmar senha</label>
                     <input type="password" name="confirm_password" required
-                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
 
                 <button type="submit" name="register"
-                    class="w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-purple-700 transition">
+                    class="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition">
                     Cadastrar
                 </button>
             </form>
 
             <p class="text-center text-sm text-gray-600 mt-6">
                 Já possui uma conta?
-                <a href="login.php" class="text-purple-600 hover:underline font-medium">Entrar</a>
+                <a href="login.php" class="text-blue-600 hover:underline font-medium">Entrar</a>
             </p>
         </div>
 

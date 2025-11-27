@@ -43,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-200 to-blue-300 min-h-screen flex items-center justify-center p-6">
+<body class="bg-gradient-to-r from-blue-300 to-blue-400 min-h-screen flex items-center justify-center p-6">
     <main class="w-full max-w-2xl bg-white p-10 rounded-2xl shadow-2xl">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-purple-700">
+            <h1 class="text-4xl font-extrabold text-blue-700">
                 <?= $produto ? "Editar Produto" : "Novo Produto" ?>
             </h1>
             <p class="text-gray-500 mt-2">
@@ -55,21 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </header>
 
         <?php if ($erro): ?>
-        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
-            <?= htmlspecialchars($erro) ?>
-        </div>
+            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
+                <?= htmlspecialchars($erro) ?>
+            </div>
         <?php endif; ?>
 
         <form action="" method="post" class="space-y-6">
             <?php if ($produto): ?>
-            <input type="hidden" name="id" value="<?= $produto['id'] ?>">
+                <input type="hidden" name="id" value="<?= $produto['id'] ?>">
             <?php endif; ?>
 
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Nome</label>
                 <input type="text" name="nome" required
                     value="<?= $produto ? htmlspecialchars($produto['nome']) : '' ?>"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
                     placeholder="Ex: Notebook Dell Inspiron" />
             </div>
 
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Preço</label>
                 <input type="number" step="0.01" name="preco" required
                     value="<?= $produto ? htmlspecialchars($produto['preco']) : '' ?>"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
                     placeholder="Ex: 2999.90" />
             </div>
 
@@ -85,26 +85,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Quantidade</label>
                 <input type="number" name="quantidade" required
                     value="<?= $produto ? htmlspecialchars($produto['quantidade']) : '' ?>"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
                     placeholder="Ex: 10" />
             </div>
 
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Descrição</label>
                 <textarea name="descricao" rows="4"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
                     placeholder="Ex: Notebook com processador Intel i7, 16GB RAM, SSD 512GB..."><?= $produto ? htmlspecialchars($produto['descricao']) : '' ?></textarea>
             </div>
 
             <button type="submit" name="<?= $produto ? 'update' : 'create' ?>"
-                class="w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:from-purple-600 hover:to-purple-700 transition">
+                class="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition">
                 <?= $produto ? "Atualizar Produto" : "Salvar Produto" ?>
             </button>
         </form>
 
         <div class="text-center mt-6">
             <a href="home.php"
-                class="inline-block px-6 py-2 text-purple-600 font-medium hover:text-purple-800 transition">
+                class="inline-block px-6 py-2 text-blue-600 font-medium hover:text-blue-800 transition">
                 Voltar para Home
             </a>
         </div>
