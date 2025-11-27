@@ -120,27 +120,38 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
         <form method="get" class="bg-white rounded-xl shadow p-4 mb-6 flex flex-col sm:flex-row gap-4 items-center">
             <input type="text" name="busca" value="<?= htmlspecialchars($_GET['busca'] ?? '') ?>"
                 placeholder="Buscar produto..."
-                class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
 
-            <select name="status" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                <option value="">Todos</option>
-                <option value="estoque" <?= (($_GET['status'] ?? '') === 'estoque') ? 'selected' : '' ?>>Em estoque
-                </option>
-                <option value="esgotado" <?= (($_GET['status'] ?? '') === 'esgotado') ? 'selected' : '' ?>>Esgotados
-                </option>
-            </select>
+            <div class="relative">
+                <button type="button" id="dropdownButton"
+                    class="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 shadow-sm flex justify-between items-center w-40">
+                    <span id="dropdownLabel"><?= $_GET['status'] ?? 'Todos' ?></span>
+                    <span class="ml-2">▼</span>
+                </button>
+
+                <ul id="dropdownMenu" class="absolute hidden mt-2 w-40 bg-white border rounded-lg shadow-lg">
+                    <li><a href="?status=" data-value="Todos"
+                            class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Todos</a></li>
+                    <li><a href="?status=estoque" data-value="Em estoque"
+                            class="block px-4 py-2 text-green-600 hover:bg-green-50">Em estoque</a></li>
+                    <li><a href="?status=esgotado" data-value="Esgotados"
+                            class="block px-4 py-2 text-red-600 hover:bg-red-50">Esgotados</a></li>
+                </ul>
+            </div>
+
 
             <input type="number" step="0.01" name="preco_min" value="<?= htmlspecialchars($_GET['preco_min'] ?? '') ?>"
-                placeholder="Preço mínimo" class="w-32 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                placeholder="Preço mínimo" class="w-40 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
 
             <input type="number" step="0.01" name="preco_max" value="<?= htmlspecialchars($_GET['preco_max'] ?? '') ?>"
-                placeholder="Preço máximo" class="w-32 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                placeholder="Preço máximo" class="w-40 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
 
             <button type="submit"
                 class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition">
                 Filtrar
             </button>
         </form>
+
 
 
         <?php if (count($produtosPagina) > 0): ?>
@@ -226,6 +237,24 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
             document.getElementById('deleteModal').classList.add('hidden');
             document.getElementById('deleteModal').classList.remove('flex');
         }
+
+        const btn = document.getElementById('dropdownButton');
+        const menu = document.getElementById('dropdownMenu');
+        const label = document.getElementById('dropdownLabel');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        menu.querySelectorAll('a').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const text = option.getAttribute('data-value');
+                label.textContent = text;
+                menu.classList.add('hidden');
+                window.location.href = option.getAttribute('href');
+            });
+        });
     </script>
 </body>
 
