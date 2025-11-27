@@ -19,7 +19,10 @@ class UserController
         $password = $dados['password'];
         $confirmPassword = $dados['confirm_password'];
 
-        $this->validateDados($name, $email, $password, $confirmPassword);
+        $erro = $this->validateDados($name, $email, $password, $confirmPassword);
+        if ($erro) {
+            return $erro;
+        }
 
         $hashedPassword = hash('sha512', $password);
 
@@ -38,30 +41,28 @@ class UserController
     private function validateDados($name, $email, $password, $confirmPassword)
     {
         if (empty($name) || empty($email) || empty($password)) {
-            header("Location: ../views/error.php?titulo=Dados+incompletos&subtitulo=Todos+os+campos+são+obrigatórios");
-            exit;
+            return "Todos os campos são obrigatórios";
         }
 
         if (!$this->isValidEmail($email)) {
-            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=Formato+de+e-mail+inválido");
-            exit;
+            return "Formato de e-mail inválido";
         }
 
         if ($this->isEmailExists($email)) {
-            header("Location: ../views/error.php?titulo=Cadastro+Inválido&subtitulo=E-mail+já+cadastrado");
-            exit;
+            return "E-mail já cadastrado";
         }
 
         if ($password !== $confirmPassword) {
-            header("Location: ../views/error.php?titulo=Senha+Inválida&subtitulo=As+senhas+não+conferem");
-            exit;
+            return "As senhas não conferem";
         }
 
         if (strlen($password) < 6) {
-            header("Location: ../views/error.php?titulo=Senha+Fraca&subtitulo=A+senha+deve+ter+no+mínimo+6+caracteres");
-            exit;
+            return "A senha deve ter no mínimo 6 caracteres";
         }
+
+        return null;
     }
+
 
     private function isValidEmail($email)
     {

@@ -18,27 +18,30 @@ class AuthController
         $password = $dados['password'];
 
         if (!$this->isValidEmail($email)) {
-            header("Location: ../views/error.php?titulo=Email+inválido&subtitulo=Formato+de+e-mail+inválido");
-            exit;
+            return "Formato de e-mail inválido";
         }
 
         $hashedPassword = hash('sha512', $password);
 
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $hashedPassword]);
-        $user = $stmt->fetch();
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+            $stmt->execute([$email, $hashedPassword]);
+            $user = $stmt->fetch();
 
-        if (!$user) {
-            header("Location: ../views/error.php?titulo=Login+Inválido&subtitulo=Usuário+ou+senha+incorretos");
+            if (!$user) {
+                return "Usuário ou senha incorretos";
+            }
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email']   = $user['email'];
+            $_SESSION['name']    = $user['name'];
+
+            header("Location: ../views/home.php");
+            exit;
+        } catch (PDOException $e) {
+            header("Location: ../views/error.php?titulo=Erro+no+Login&subtitulo=Não+foi+possível+realizar+o+login");
             exit;
         }
-
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['email']   = $user['email'];
-        $_SESSION['name']    = $user['name'];
-
-        header("Location: ../views/home.php");
-        exit;
     }
 
     public function logout()
