@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             <p class="text-gray-500 text-center mb-8">Preencha os dados abaixo para começar</p>
 
             <?php if ($erro): ?>
-                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
-                    <?= htmlspecialchars($erro) ?>
-                </div>
+            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center">
+                <?= htmlspecialchars($erro) ?>
+            </div>
             <?php endif; ?>
 
             <form action="" method="post" class="space-y-6">
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         </div>
 
         <div class="hidden md:flex md:w-1/2 bg-blue-100 items-center justify-center">
-            <img src="../assets/Mobile UI-UX-bro.png" alt="Cadastro ilustrativo" class="w-3/4 h-auto" />
+            <img src="../assets/software tester-rafiki.png" alt="Cadastro ilustrativo" class="w-3/4 h-auto" />
         </div>
     </div>
 </body>

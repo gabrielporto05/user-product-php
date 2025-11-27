@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     <div class="flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-xl rounded-xl overflow-hidden">
 
         <div class="hidden md:flex md:w-1/2 bg-blue-100 items-center justify-center">
-            <img src="../assets/Online resume-bro.png" alt="Login ilustrativo" class="w-3/4 h-auto" />
+            <img src="../assets/software tester-bro.png" alt="Login ilustrativo" class="w-3/4 h-auto" />
         </div>
 
         <div class="flex-1 p-10 flex flex-col justify-center">
