@@ -65,6 +65,17 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .descricao-limitada {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            overflow: hidden;
+        }
+    </style>
+
 </head>
 
 <body class="bg-zinc-100 min-h-screen flex flex-col items-center">
@@ -143,7 +154,9 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
                                 <?= $produto['quantidade'] > 0 ? 'Em estoque' : 'Esgotado' ?>
                             </span>
                         </div>
-                        <p class="text-gray-600 mt-2 text-sm"><?= htmlspecialchars($produto['descricao']) ?></p>
+                        <p class="text-gray-600 mt-2 text-sm descricao-limitada">
+                            <?= htmlspecialchars($produto['descricao']) ?>
+                        </p>
                         <p class="mt-4 text-gray-800 font-semibold">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
                         <div class="flex gap-2 mt-4">
                             <a href="create-product.php?id=<?= $produto['id'] ?>"
@@ -153,7 +166,7 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
                             <form action="../controllers/ProductController.php" method="post" class="flex-1"
                                 onsubmit="return confirm('Deseja excluir este produto?');">
                                 <input type="hidden" name="delete" value="<?= $produto['id'] ?>">
-                                <button type="submit"
+                                <button type="button" onclick="openModal(<?= $produto['id'] ?>)"
                                     class="w-full py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2">
                                     Excluir
                                 </button>
@@ -180,6 +193,40 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
             </div>
         <?php endif; ?>
     </main>
+
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md text-center">
+            <h2 class="text-xl font-bold text-red-600 mb-4">Confirmar exclusão</h2>
+            <p class="text-gray-600 mb-6">Tem certeza que deseja excluir este produto?</p>
+
+            <form id="deleteForm" action="../controllers/ProductController.php" method="post">
+                <input type="hidden" name="delete" id="deleteId">
+                <div class="flex gap-4 justify-center">
+                    <button type="button" onclick="closeModal()"
+                        class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById('deleteId').value = id;
+            document.getElementById('deleteModal').classList.remove('hidden');
+            document.getElementById('deleteModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            document.getElementById('deleteModal').classList.remove('flex');
+        }
+    </script>
 </body>
 
 </html>
