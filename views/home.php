@@ -67,7 +67,7 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-300 to-blue-400 min-h-screen flex flex-col items-center">
+<body class="bg-zinc-100 min-h-screen flex flex-col items-center">
 
     <header class="w-full max-w-6xl flex justify-between items-center py-6 px-4">
         <h1 class="text-3xl font-extrabold text-blue-700">Bem-vindo, <?= htmlspecialchars($_SESSION['name']) ?></h1>
@@ -133,51 +133,51 @@ $produtosPagina = array_slice($produtos, $inicio, $porPagina);
 
 
         <?php if (count($produtosPagina) > 0): ?>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php foreach ($produtosPagina as $produto): ?>
-            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex flex-col justify-between">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-bold text-blue-700 truncate"><?= htmlspecialchars($produto['nome']) ?></h3>
-                    <span class="px-2 py-1 w-[90px] text-xs rounded-full 
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach ($produtosPagina as $produto): ?>
+                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-blue-700 truncate"><?= htmlspecialchars($produto['nome']) ?></h3>
+                            <span class="px-2 py-1 w-[90px] text-xs rounded-full 
                  <?= $produto['quantidade'] > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
-                        <?= $produto['quantidade'] > 0 ? 'Em estoque' : 'Esgotado' ?>
-                    </span>
-                </div>
-                <p class="text-gray-600 mt-2 text-sm"><?= htmlspecialchars($produto['descricao']) ?></p>
-                <p class="mt-4 text-gray-800 font-semibold">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-                <div class="flex gap-2 mt-4">
-                    <a href="create-product.php?id=<?= $produto['id'] ?>"
-                        class="flex-1 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2">
-                        Editar
-                    </a>
-                    <form action="../controllers/ProductController.php" method="post" class="flex-1"
-                        onsubmit="return confirm('Deseja excluir este produto?');">
-                        <input type="hidden" name="delete" value="<?= $produto['id'] ?>">
-                        <button type="submit"
-                            class="w-full py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2">
-                            Excluir
-                        </button>
-                    </form>
-                </div>
+                                <?= $produto['quantidade'] > 0 ? 'Em estoque' : 'Esgotado' ?>
+                            </span>
+                        </div>
+                        <p class="text-gray-600 mt-2 text-sm"><?= htmlspecialchars($produto['descricao']) ?></p>
+                        <p class="mt-4 text-gray-800 font-semibold">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
+                        <div class="flex gap-2 mt-4">
+                            <a href="create-product.php?id=<?= $produto['id'] ?>"
+                                class="flex-1 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2">
+                                Editar
+                            </a>
+                            <form action="../controllers/ProductController.php" method="post" class="flex-1"
+                                onsubmit="return confirm('Deseja excluir este produto?');">
+                                <input type="hidden" name="delete" value="<?= $produto['id'] ?>">
+                                <button type="submit"
+                                    class="w-full py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition flex items-center justify-center gap-2">
+                                    Excluir
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
             </div>
 
-            <?php endforeach; ?>
-        </div>
-
-        <div class="flex justify-center items-center gap-2 mt-8">
-            <?php for ($i = 1; $i <= $paginas; $i++): ?>
-            <a href="?pagina=<?= $i ?>"
-                class="px-4 py-2 rounded-lg text-sm font-semibold 
+            <div class="flex justify-center items-center gap-2 mt-8">
+                <?php for ($i = 1; $i <= $paginas; $i++): ?>
+                    <a href="?pagina=<?= $i ?>"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold 
                     <?= $i == $paginaAtual ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border border-blue-300 hover:bg-blue-100' ?>">
-                <?= $i ?>
-            </a>
-            <?php endfor; ?>
-        </div>
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+            </div>
 
         <?php else: ?>
-        <div class="text-center py-10 bg-white rounded-xl shadow">
-            <p class="text-gray-500">Nenhum produto cadastrado.</p>
-        </div>
+            <div class="text-center py-10 bg-white rounded-xl shadow">
+                <p class="text-gray-500">Nenhum produto cadastrado.</p>
+            </div>
         <?php endif; ?>
     </main>
 </body>

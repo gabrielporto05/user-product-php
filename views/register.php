@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-300 to-blue-400 min-h-screen flex items-center justify-center">
+<body class="bg-zinc-100 min-h-screen flex items-center justify-center">
     <div class="flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-xl rounded-xl overflow-hidden">
 
         <div class="flex-1 p-10 flex flex-col justify-center">

@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-300 to-blue-400 min-h-screen flex items-center justify-center p-6">
+<body class="bg-zinc-100 min-h-screen flex items-center justify-center p-6">
     <main class="w-full max-w-2xl bg-white p-10 rounded-2xl shadow-2xl">
         <header class="text-center mb-8">
             <h1 class="text-4xl font-extrabold text-blue-700">
@@ -103,8 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div class="text-center mt-6">
-            <a href="home.php"
-                class="inline-block px-6 py-2 text-blue-600 font-medium hover:text-blue-800 transition">
+            <a href="home.php" class="inline-block px-6 py-2 text-blue-600 font-medium hover:text-blue-800 transition">
                 Voltar para Home
             </a>
         </div>
