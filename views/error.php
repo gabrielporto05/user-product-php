@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 $titulo = isset($_GET['titulo']) ? htmlspecialchars($_GET['titulo']) : "Erro inesperado";
